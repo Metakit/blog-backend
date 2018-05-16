@@ -1,0 +1,13 @@
+# ignore IDE Setting folders
+.vscode/
+.idea/
+
+# ignore nodeJs settings file
+package-lock.json
+
+# ignore nodeJs modules
+node_modules/
+
+# ignore koa2 views & public
+public/
+views/
