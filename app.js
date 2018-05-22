@@ -5,9 +5,20 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
+const jwt = require('jsonwebtoken')
+const jwtKoa = require('koa-jwt')
+const util = require('util')
+const verify = util.promisify(jwt.verify)
+const fs = require('fs')
+const crypto = require('crypto')
+
+let pem = fs.readFileSync('key.pem')
+let key = pem.toString('ascii')
+const hmac = crypto.createHmac('sha1', key)
+const secret = hmac.digest('hex')
 
 const index = require('./routes/index')
-const users = require('./routes/users')
+
 
 // error handler
 onerror(app)
@@ -24,6 +35,9 @@ app.use(views(__dirname + '/views', {
   extension: 'pug'
 }))
 
+app.use(jwtKoa({secret}).unless({
+  path:[/^\/login/]
+}))
 // logger
 app.use(async (ctx, next) => {
   const start = new Date()
@@ -34,7 +48,6 @@ app.use(async (ctx, next) => {
 
 // routes
 app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {

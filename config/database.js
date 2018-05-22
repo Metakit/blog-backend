@@ -1,9 +1,11 @@
 const config = {
-    host            :               "127.0.0.1",
-    port            :               3306,     
-    user            :               "blog",
-    password        :               "blogpass",
-    database        :               "blog"
+    host                :               "localhost",
+    port                :               3306,     
+    user                :               "blog",
+    password            :               "blogpass",
+    database            :               "blog",
+    waitForConnections  :               true,
+    
 }
 
 module.exports = config
