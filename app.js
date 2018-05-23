@@ -18,6 +18,7 @@ const hmac = crypto.createHmac('sha1', key)
 const secret = hmac.digest('hex')
 
 const index = require('./routes/index')
+const login = require('./routes/login')
 
 
 // error handler
@@ -48,6 +49,7 @@ app.use(async (ctx, next) => {
 
 // routes
 app.use(index.routes(), index.allowedMethods())
+app.use(login.routes(), login.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {

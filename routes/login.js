@@ -11,7 +11,7 @@ const router = require('koa-router')()
 router.post('/login', async (ctx) => {
     const user = ctx.request.body
     if (user && user.name){
-        const pass = await db.query(`SELECT upass WHERE username = ${user.name}`)
+        const pass = await db.query(`SELECT upass FROM u_account WHERE username = ${user.name}`)
         if (user.pass){
             const md5 = crypto.createHash('md5')
             const hmac = crypto.createHmac('sha1', key)
