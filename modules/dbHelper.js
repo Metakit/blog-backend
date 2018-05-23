@@ -1,5 +1,5 @@
 const mysql = require('mysql2/promise')
-const config = require('../config/databaseß')
+const config = require('../config/database')
 
 let connectionPool = mysql.createPool(config)
 

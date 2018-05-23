@@ -1,3 +1,4 @@
+const path = require('path')
 const Koa = require('koa')
 const app = new Koa()
 const views = require('koa-views')
@@ -12,13 +13,14 @@ const verify = util.promisify(jwt.verify)
 const fs = require('fs')
 const crypto = require('crypto')
 
-let pem = fs.readFileSync('key.pem')
+let pem = fs.readFileSync(path.join(__dirname, 'key.pem'))
 let key = pem.toString('ascii')
 const hmac = crypto.createHmac('sha1', key)
 const secret = hmac.digest('hex')
 
 const index = require('./routes/index')
 const login = require('./routes/login')
+const register = require('./routes/register')
 
 
 // error handler
@@ -37,7 +39,7 @@ app.use(views(__dirname + '/views', {
 }))
 
 app.use(jwtKoa({secret}).unless({
-  path:[/^\/login/]
+  path:[/^\/login/, /^\/register/]
 }))
 // logger
 app.use(async (ctx, next) => {
@@ -50,6 +52,7 @@ app.use(async (ctx, next) => {
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(login.routes(), login.allowedMethods())
+app.use(register.routes(), register.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {

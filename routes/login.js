@@ -3,7 +3,8 @@ const db = require('../modules/dbHelper')
 const crypto = require('crypto')
 const fs = require('fs')
 
-let pem = fs.readFileSync('../key.pem')
+
+let pem = fs.readFileSync('key.pem')
 let key = pem.toString('ascii')
 
 const router = require('koa-router')()
@@ -22,6 +23,11 @@ router.post('/login', async (ctx) => {
                     userpass:user.pass,
                 }
                 const token = jwt.sign(userToken, hmac.digest('hex'), {expiresIn:'24h'})
+                ctx.body = {
+                    message:'Login succed',
+                    code:0,
+                    token:token,
+                }
             } else {
                 ctx.body = {
                     message:'Wrong Password',
@@ -46,3 +52,5 @@ router.post('/login', async (ctx) => {
         }
     }
 })
+
+module.exports = router
