@@ -38,9 +38,10 @@ app.use(views(__dirname + '/views', {
   extension: 'pug'
 }))
 
-app.use(jwtKoa({secret}).unless({
+app.use(jwtKoa({secret:secret, cookie:"token"}).unless({
   path:[/^\/login/, /^\/register/]
 }))
+
 // logger
 app.use(async (ctx, next) => {
   const start = new Date()

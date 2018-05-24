@@ -23,10 +23,15 @@ router.post('/login', async (ctx) => {
                     userpass:user.pass,
                 }
                 const token = jwt.sign(userToken, hmac.digest('hex'), {expiresIn:'24h'})
+                ctx.cookies.set("token", token, {
+                    maxAge: 24 * 60 * 1000,
+                    httpOnly:true,
+                    overwrite:false,
+                    domain:'localhost',
+                })
                 ctx.body = {
                     message:'Login succed',
                     code:0,
-                    token:token,
                 }
             } else {
                 ctx.body = {
