@@ -13,3 +13,14 @@ module.exports.query = async (sql) => {
         return null
     }
 }
+
+
+module.exports.getUserId = async (username) => {
+    const connection = await connectionPool.getConnection()
+    const [rows, fields] = await connection.excute(`SELECT uid WHERE username = ${user.usernmae}`)
+    if (rows.length !== 0) {
+        return rows
+    } else {
+        return null
+    }
+}
