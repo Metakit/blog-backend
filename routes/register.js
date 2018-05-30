@@ -9,11 +9,11 @@ const router = require('koa-router')()
 router.post('/register', async (ctx) => {
     let user = ctx.request.body
     if (user.username) {
-        const res = await db.query(`SELECT * FROM u_account WHERE username = ${user.username}`)
+        const res = await db.query("u_account", "uid", {"username":user.username})
         if (!res) {
             if (user.userpass) {
                 let pass = md5.update(user.userpass).digest('hex')
-                const res = await db.query(`INSERT INTO u_account VALUES (DEFUALT, ${pass}, ${user.username})`)
+                const res = await db.insert("u_account", ["DEFUALT", pass, user.username])
                 ctx.body = {
                     message:'Register success',
                     code:0,

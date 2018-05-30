@@ -22,6 +22,7 @@ const index = require('./routes/index')
 const login = require('./routes/login')
 const register = require('./routes/register')
 
+global.userlist = new Array()
 
 // error handler
 onerror(app)
