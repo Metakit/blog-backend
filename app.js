@@ -12,6 +12,7 @@ const util = require('util')
 const verify = util.promisify(jwt.verify)
 const fs = require('fs')
 const crypto = require('crypto')
+const error_list = require('./modules/error').error_list
 
 let pem = fs.readFileSync(path.join(__dirname, 'key.pem'))
 let key = pem.toString('ascii')
