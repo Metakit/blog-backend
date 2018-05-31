@@ -18,9 +18,9 @@ let key = pem.toString('ascii')
 const hmac = crypto.createHmac('sha1', key)
 const secret = hmac.digest('hex')
 
-const index = require('./routes/index')
 const login = require('./routes/login')
 const register = require('./routes/register')
+const add = require('./routes/add')
 
 global.userlist = new Array()
 
@@ -52,9 +52,9 @@ app.use(async (ctx, next) => {
 })
 
 // routes
-app.use(index.routes(), index.allowedMethods())
 app.use(login.routes(), login.allowedMethods())
 app.use(register.routes(), register.allowedMethods())
+app.use(add.routes(), register.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
