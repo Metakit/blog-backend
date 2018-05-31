@@ -40,7 +40,7 @@ app.use(views(__dirname + '/views', {
 }))
 
 app.use(jwtKoa({secret:secret, cookie:"token"}).unless({
-  path:[/^\/login/, /^\/register/]
+  path:[/^\/api\/login/, /^\/api\/register/]
 }))
 
 // logger

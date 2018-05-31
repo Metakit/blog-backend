@@ -6,7 +6,7 @@ const db = require('../modules/dbHelper')
 
 const md5 = crypto.createHash('md5')
 
-router.post('/add', async (ctx)=>{
+router.post('/api/add', async (ctx)=>{
     const user = ctx.state.user
     const markdown = ctx.request.body
     

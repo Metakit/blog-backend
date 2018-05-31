@@ -6,7 +6,7 @@ const db = require('../modules/dbHelper')
 
 const router = require('koa-router')()
 
-router.post('/register', async (ctx) => {
+router.post('/api/register', async (ctx) => {
     let user = ctx.request.body
     if (user.username) {
         const res = await db.query("u_account", "uid", {"username":user.username})

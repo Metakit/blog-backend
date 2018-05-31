@@ -9,7 +9,7 @@ let key = pem.toString('ascii')
 
 const router = require('koa-router')()
 
-router.post('/login', async (ctx) => {
+router.post('/api/login', async (ctx) => {
     const user = ctx.request.body
     if (user && user.name){
         const res = await db.query("u_account", ["upass", "uid"], {"username":user.name})
