@@ -23,7 +23,7 @@ router.post('/login', async (ctx) => {
                 userlist.push(uid)
                 let userToken = {
                     username:user.name,
-                    userpass:user.pass,
+                    uid     :uid,
                 }
                 const token = jwt.sign(userToken, hmac.digest('hex'), {expiresIn:'24h'})
                 ctx.cookies.set("token", token, {

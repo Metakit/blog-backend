@@ -55,6 +55,8 @@ module.exports.insert = async (table, values) => {
 
     if (_.isArray(values))
         values = values.map((value) => {
+            if (_.isString(value))
+                return `\`${connection.escape(value)}\``
             return connection.escape(value)
         }).join(", ")
 

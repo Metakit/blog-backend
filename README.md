@@ -6,4 +6,5 @@
 | :----------: | :-----------: | :---------------------: |
 |  api/login   | username,pass | message,code,set cookie |
 | api/register | username,pass |      message,code       |
+|   api/add    | title,content |      message,code       |
 
