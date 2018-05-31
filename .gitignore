@@ -14,3 +14,6 @@ views/
 
 # ignore pem file
 *.pem
+
+# ignore log file
+*.log
