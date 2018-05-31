@@ -31,4 +31,6 @@ router.post('/add', async (ctx)=>{
     }
 })
 
+module.exports = router
+
 
