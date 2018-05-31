@@ -17,3 +17,6 @@ views/
 
 # ignore log file
 *.log
+
+# ignore blogs
+blogs/*.md

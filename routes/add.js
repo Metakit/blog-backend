@@ -15,8 +15,10 @@ router.post('/api/add', async (ctx)=>{
         const title = markdown.title
         md5.update(title + uid)
         const title_hash = md5.digest('hex')
-        const markdown_path = path.join(__dirname, "blogs", title_hash + '.md')
-        fs.createWriteStream(markdown_path).write(markdown.content)
+        const markdown_path = path.join(".", "blogs", title_hash + '.md')
+        const in_stream = fs.createWriteStream(markdown_path)
+        in_stream.write(markdown_path)
+        in_stream.end()
         const timestamp = new Date().getTime()
         const rows = db.insert("u_blogpath", [user.uid, markdown_path, title, timestamp, timestamp])
         ctx.body = {

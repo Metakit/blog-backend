@@ -11,18 +11,18 @@ const router = require('koa-router')()
 
 router.post('/api/login', async (ctx) => {
     const user = ctx.request.body
-    if (user && user.name){
-        const res = await db.query("u_account", ["upass", "uid"], {"username":user.name})
+    if (user && user.username){
+        const res = await db.query("u_account", ["upass", "uid"], {"username":user.username})
         let pass = res["upass"]
         let uid = res["uid"]
-        if (user.pass){
+        if (user.userpass){
             const md5 = crypto.createHash('md5')
             const hmac = crypto.createHmac('sha1', key)
-            md5.update(user.pass)
+            md5.update(user.userpass)
             if (md5.digest('hex') === pass) {
                 userlist.push(uid)
                 let userToken = {
-                    username:user.name,
+                    username:user.username,
                     uid     :uid,
                 }
                 const token = jwt.sign(userToken, hmac.digest('hex'), {expiresIn:'24h'})

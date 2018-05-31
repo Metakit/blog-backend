@@ -7,13 +7,14 @@ const db = require('../modules/dbHelper')
 const router = require('koa-router')()
 
 router.post('/api/register', async (ctx) => {
+
     let user = ctx.request.body
     if (user.username) {
         const res = await db.query("u_account", "uid", {"username":user.username})
         if (!res) {
             if (user.userpass) {
                 let pass = md5.update(user.userpass).digest('hex')
-                const res = await db.insert("u_account", ["DEFUALT", pass, user.username])
+                const res = await db.insert("u_account", ["DEFAULT", pass, user.username])
                 ctx.body = {
                     message:'Register success',
                     code:0,

@@ -55,13 +55,13 @@ module.exports.insert = async (table, values) => {
 
     if (_.isArray(values))
         values = values.map((value) => {
-            if (_.isString(value))
-                return `\`${connection.escape(value)}\``
+            if (value === "DEFAULT")
+                return value
             return connection.escape(value)
         }).join(", ")
 
     let sql = `INSERT INTO ${table} VALUES(${values})`
-
+    console.log(sql)
     const [rows, fields] = await connection.execute(sql)
 
     if(rows.length === 0)
