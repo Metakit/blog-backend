@@ -1,5 +1,4 @@
 const crypto = require('crypto')
-const md5 = crypto.createHash('md5')
 
 const db = require('../modules/dbHelper')
 
@@ -13,6 +12,7 @@ router.post('/api/register', async (ctx) => {
         const res = await db.query("u_account", "uid", {"username":user.username})
         if (!res) {
             if (user.userpass) {
+                const md5 = crypto.createHash('md5')
                 let pass = md5.update(user.userpass).digest('hex')
                 const res = await db.insert("u_account", ["DEFAULT", pass, user.username])
                 ctx.body = {
