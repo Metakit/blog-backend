@@ -9,39 +9,47 @@ let key = pem.toString('ascii')
 
 const router = require('koa-router')()
 
-router.post('/login', async (ctx) => {
+router.post('/api/login', async (ctx) => {
     const user = ctx.request.body
-    if (user && user.name){
-        const pass = await db.query(`SELECT upass FROM u_account WHERE username = ${user.name}`)
-        if (user.pass){
+    if (user && user.username){
+        const res = await db.query("u_account", ["upass", "uid"], {"username":user.username})
+        let pass = res["upass"]
+        let uid = res["uid"]
+        if (user.userpass){
             const md5 = crypto.createHash('md5')
             const hmac = crypto.createHmac('sha1', key)
-            md5.update(user.pass)
-            if (md5.digest('hex') == pass) {
+            md5.update(user.userpass)
+            if (md5.digest('hex') === pass) {
+                userlist.push(uid)
                 let userToken = {
-                    username:user.name,
-                    userpass:user.pass,
+                    username:user.username,
+                    uid     :uid,
                 }
                 const token = jwt.sign(userToken, hmac.digest('hex'), {expiresIn:'24h'})
+                ctx.cookies.set("token", token, {
+                    maxAge: 24 * 60 * 1000,
+                    httpOnly:true,
+                    overwrite:false,
+                    domain:'localhost',
+                })
                 ctx.body = {
-                    message:'Login succed',
+                    message:'Login succeed',
                     code:0,
-                    token:token,
                 }
             } else {
                 ctx.body = {
-                    message:'Wrong Password',
+                    message:'Wrong password',
                     code: -1
                 }
             }
-        } else if (pass == null) {
+        } else if (pass === null) {
             ctx.body = {
-                message:'No user',
+                message:'Unregistered user',
                 code:-1
             }
         } else {
             ctx.body = {
-                message:'No password',
+                message:'No input password',
                 code:-1
             }
         }

@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node bin/www",
     "dev": "./node_modules/.bin/nodemon bin/www",
-    "prd": "pm2 start bin/www",
+    "prd": "pm2 start bin/www --watch --ignore-watch=\"test blogs README.md .gitignore .gitkeep\" -o ./std.log -e ./error.log",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -21,6 +21,7 @@
     "koa-router": "^7.1.1",
     "koa-static": "^3.0.0",
     "koa-views": "^5.2.1",
+    "lodash": "^4.17.10",
     "mysql2": "^1.5.3",
     "pug": "^2.0.0-rc.1"
   },
